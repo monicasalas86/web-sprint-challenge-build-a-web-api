@@ -147,7 +147,38 @@ We have provided test data for all the resources.
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
+
+  Node.js is used to write server code. It communicates with clients using JSON for data interchange.
+    core features: 
+      - uses javaScript and the same paradigm for both client and server, which minimizes context switching 
+      - single threaded, which removes complexity of handling multiple threads
+      - asynchronous, takes full advantage of the processor its running on
+      - JS gives access to npm repository, which is the largest ecosystem of valuable library in npm modules
+
+  Express is a light and unopinionated framework that sits on top of Node.js
+    core features:
+      - builds web apps
+      - Serves SPA's
+      - Builds RESTful web services that work with JSON
+      - Serves static content
+      - powers real time apps using Web Sockets and WebRTC
+
 1. Understand and explain the use of Middleware.
+
+  a Middleware is a function that will receive request and response objects and they perform specific tasks. There are 3 forms, 1) built in midleware (like .use()), 2) third party middleware (like cors), and 3) custom middleware.
+
 1. The basic principles of the REST architectural style.
+
+  - everything is a resource
+  - each resource is accessible via a unique URI
+  - resources can have multiple representations
+  - communication happens over a stateless protocol (HTTP)
+  - resource management happens via HTTP methods
+
 1. Understand and explain the use of Express Routers.
+
+  Express Routers help us sort through incoming requests to servers from clients to perform the appropriate request handler function. Responses depend on the URL and the HTTP Method that is used.
+
 1. Describe tooling used to manually test the correctness of an API.
+
+  HTTPie can be used in the command line to test request handlers. The format for the GET HTTP Method is `HTTP :4000/foo/bar` and it will return whatever data is in that endpoint

@@ -35,7 +35,7 @@ router.put('/:id', checkActionId, validateAction, validateProjectId, (req,res, n
         })
         .catch(next)
 })
-// [DELETE] /:id
+
 router.delete('/:id', checkActionId, (req,res, next) => {
     Actions.remove(req.params.id)
         .then(() => {
