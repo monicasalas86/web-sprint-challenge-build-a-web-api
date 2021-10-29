@@ -1,6 +1,7 @@
 const express = require('express')
 const {
-    handleError
+    handleError,
+    checkProjectId
 } = require('./projects-middleware')
 const Projects = require('./projects-model')
 const router = express.Router()
@@ -12,9 +13,8 @@ router.get('/', (req, res, next) => {
         })
         .catch(next)
 })
-// [GET] /:id
-router.get('/:id', (req, res) => {
-    
+router.get('/:id', checkProjectId, (req, res) => {
+    res.status(200).json(req.projectFromDb)
 })
 // [POST] /
 router.post('/', (req, res) => {
