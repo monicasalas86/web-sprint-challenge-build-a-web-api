@@ -27,7 +27,7 @@ router.post('/', validateAction, validateProjectId, (req,res, next) => {
         })
         .catch(next)
 })
-// [PUT] /:id
+
 router.put('/:id', checkActionId, validateAction, validateProjectId, (req,res, next) => {
     Actions.update(req.params.id, req.body)
         .then(updatedAction => {
@@ -36,8 +36,14 @@ router.put('/:id', checkActionId, validateAction, validateProjectId, (req,res, n
         .catch(next)
 })
 // [DELETE] /:id
-router.delete('/:id', checkActionId, (req,res) => {
-    
+router.delete('/:id', checkActionId, (req,res, next) => {
+    Actions.remove(req.params.id)
+        .then(() => {
+            res.status(200).json({
+                message: 'Action removed'
+            })
+        })
+        .catch(next)
 })
 
 router.use(handleError)
