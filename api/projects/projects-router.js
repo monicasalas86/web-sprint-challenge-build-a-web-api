@@ -41,9 +41,12 @@ router.delete('/:id', checkProjectId, (req, res, next) => {
         })
         .catch(next)
 })
-// [GET] /:id/actions
-router.get('/:id/actions', checkProjectId, (req, res) => {
-    
+router.get('/:id/actions', checkProjectId, (req, res, next) => {
+    Projects.getProjectActions(req.params.id)
+        .then(actions => {
+            res.status(200).json(actions)
+        })
+        .catch(next)
 })
 
 router.use(handleError)
