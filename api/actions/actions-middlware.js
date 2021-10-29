@@ -22,7 +22,19 @@ function checkActionId (req, res, next) {
         .catch(next)
 }
 
+function validateAction (req, res, next) {
+    const {project_id, description, notes} = req.body
+    if(!project_id || !description || !notes) {
+        res.status(400).json({
+            message: 'Please provide required fields'
+        })
+    } else {
+        next()
+    }
+}
+
 module.exports = {
     handleError,
-    checkActionId
+    checkActionId,
+    validateAction
 }

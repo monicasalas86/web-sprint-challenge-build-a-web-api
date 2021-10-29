@@ -1,7 +1,8 @@
 const express = require('express')
 const {
     handleError,
-    checkActionId
+    checkActionId,
+    validateAction
 } = require('./actions-middlware')
 const Actions = require('./actions-model')
 const router = express.Router()
@@ -13,13 +14,17 @@ router.get('/', (req, res, next) => {
         })
         .catch(next)
 })
-// [GET] /:id
+
 router.get('/:id', checkActionId, (req,res) => {
     res.status(200).json(req.actionFromDb)
 })
 // [POST] /
-router.post('/', (req,res) => {
-    
+router.post('/', validateAction, (req,res, next) => {
+    Actions.insert(req.body)
+        .then(action => {
+            res.status(201).json(action)
+        })
+        .catch(next)
 })
 // [PUT] /:id
 router.put('/:id', checkActionId, (req,res) => {
