@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
 router.get('/:id', checkActionId, (req,res) => {
     res.status(200).json(req.actionFromDb)
 })
-// [POST] /
+
 router.post('/', validateAction, validateProjectId, (req,res, next) => {
     Actions.insert(req.body)
         .then(action => {
@@ -28,8 +28,12 @@ router.post('/', validateAction, validateProjectId, (req,res, next) => {
         .catch(next)
 })
 // [PUT] /:id
-router.put('/:id', checkActionId, (req,res) => {
-    
+router.put('/:id', checkActionId, validateAction, validateProjectId, (req,res, next) => {
+    Actions.update(req.params.id, req.body)
+        .then(updatedAction => {
+            res.status(200).json(updatedAction)
+        })
+        .catch(next)
 })
 // [DELETE] /:id
 router.delete('/:id', checkActionId, (req,res) => {
