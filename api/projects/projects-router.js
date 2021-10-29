@@ -1,7 +1,8 @@
 const express = require('express')
 const {
     handleError,
-    checkProjectId
+    checkProjectId,
+    validateProject
 } = require('./projects-middleware')
 const Projects = require('./projects-model')
 const router = express.Router()
@@ -16,20 +17,23 @@ router.get('/', (req, res, next) => {
 router.get('/:id', checkProjectId, (req, res) => {
     res.status(200).json(req.projectFromDb)
 })
-// [POST] /
-router.post('/', (req, res) => {
-    
+router.post('/', validateProject, (req, res, next) => {
+    Projects.insert(req.body)
+        .then(project => {
+            res.status(201).json(project)
+        })
+        .catch(next)
 })
 // [PUT] /:id
-router.put('/:id', (req, res) => {
+router.put('/:id', checkProjectId, (req, res) => {
     
 })
 // [DELETE] /:id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkProjectId, (req, res) => {
     
 })
 // [GET] /:id/actions
-router.get('/:id/actions', (req, res) => {
+router.get('/:id/actions', checkProjectId, (req, res) => {
     
 })
 
