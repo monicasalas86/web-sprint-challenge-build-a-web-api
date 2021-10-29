@@ -32,9 +32,14 @@ router.put('/:id', checkProjectId, validateProject, validateCompleted, (req, res
         })
         .catch(next)
 })
-// [DELETE] /:id
-router.delete('/:id', checkProjectId, (req, res) => {
-    
+router.delete('/:id', checkProjectId, (req, res, next) => {
+    Projects.remove(req.params.id)
+        .then(() => {
+            res.status(200).json({
+                message: 'Project Removed'
+            })
+        })
+        .catch(next)
 })
 // [GET] /:id/actions
 router.get('/:id/actions', checkProjectId, (req, res) => {
