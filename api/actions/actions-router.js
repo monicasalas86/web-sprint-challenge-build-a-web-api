@@ -2,7 +2,8 @@ const express = require('express')
 const {
     handleError,
     checkActionId,
-    validateAction
+    validateAction,
+    validateProjectId
 } = require('./actions-middlware')
 const Actions = require('./actions-model')
 const router = express.Router()
@@ -19,7 +20,7 @@ router.get('/:id', checkActionId, (req,res) => {
     res.status(200).json(req.actionFromDb)
 })
 // [POST] /
-router.post('/', validateAction, (req,res, next) => {
+router.post('/', validateAction, validateProjectId, (req,res, next) => {
     Actions.insert(req.body)
         .then(action => {
             res.status(201).json(action)

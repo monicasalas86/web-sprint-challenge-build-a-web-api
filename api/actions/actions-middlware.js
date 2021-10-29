@@ -1,4 +1,5 @@
 const Actions = require('./actions-model')
+const Projects = require('../projects/projects-model')
 
 function handleError(err, req, res, next) {
     res.status(err.status || 500).json({
@@ -33,8 +34,26 @@ function validateAction (req, res, next) {
     }
 }
 
+async function validateProjectId (req, res, next) {
+    const {project_id} = req.body
+    try {
+        const existingProject = await Projects.get(project_id)
+        if(!existingProject) {
+            next({
+                status: 404,
+                message: 'project not found'
+            })
+        } else {
+            next()
+        }
+    } catch (err){
+        next(err)
+    }
+}
+
 module.exports = {
     handleError,
     checkActionId,
-    validateAction
+    validateAction,
+    validateProjectId
 }
