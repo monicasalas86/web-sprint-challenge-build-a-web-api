@@ -2,7 +2,8 @@ const express = require('express')
 const {
     handleError,
     checkProjectId,
-    validateProject
+    validateProject,
+    validateCompleted
 } = require('./projects-middleware')
 const Projects = require('./projects-model')
 const router = express.Router()
@@ -24,10 +25,10 @@ router.post('/', validateProject, (req, res, next) => {
         })
         .catch(next)
 })
-router.put('/:id', checkProjectId, validateProject, (req, res, next) => {
+router.put('/:id', checkProjectId, validateProject, validateCompleted, (req, res, next) => {
     Projects.update(req.params.id, req.body)
-        .then(project => {
-            res.status(200).json(project)
+        .then(updatedProject => {
+            res.status(200).json(updatedProject)
         })
         .catch(next)
 })

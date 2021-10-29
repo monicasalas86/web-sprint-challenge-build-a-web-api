@@ -24,18 +24,30 @@ function checkProjectId (req, res, next) {
 
 function validateProject (req, res, next) {
     const {name, description} = req.body
-    if(name && description) {
-        next()
-    } else {
-        next({
-            status: 400,
+    if(!name || !description) {
+        res.status(400).json({
             message: 'Please provide name and description'
         })
+    } else {
+        next()
+    }
+}
+
+function validateCompleted (req, res, next) {
+    const {completed} = req.body
+    if (typeof completed !== 'boolean') {
+        next({
+            status: 400,
+            message: 'Please complete project'
+        })
+    } else {
+        next()
     }
 }
 
 module.exports = {
     handleError,
     checkProjectId,
-    validateProject
+    validateProject,
+    validateCompleted
 }
